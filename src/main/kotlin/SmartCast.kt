@@ -5,18 +5,17 @@ interface Expressao
 class Numero(val numero: Int) : Expressao
 class Soma(val direita: Expressao, val esqueda: Expressao) : Expressao
 
-fun avaliacao(expressao: Expressao) : Int {
+fun avaliacao(expressao: Expressao) : Int =
 
-    if(expressao is Numero) {
-        return expressao.numero
+    when(expressao) {
+         is Numero -> {
+             expressao.numero
+         }
+         is Soma -> {
+             avaliacao(expressao.direita) + avaliacao(expressao.esqueda)
+         }
+        else -> throw IllegalArgumentException("Expressão desconhecida")
     }
-
-    if (expressao is Soma) {
-        return avaliacao(expressao.direita) + avaliacao(expressao.esqueda)
-    }
-
-    throw IllegalArgumentException("Expressão desconhecida")
-}
 
 fun main() {
     //((1 + 2) + 4) exemplo para o exercicio
